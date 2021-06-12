@@ -1,17 +1,19 @@
 import { user } from "src/app/model/user";
 import { userDetaialsAction, UserActionTypes } from "../actions/userActions";
+import { AppState, UserReduceState } from "../selector/selector";
 
-export interface State {
-  user: user[];
-}
-export const initialState: State = {
-  user: [],
+export const initialState: UserReduceState = {
+  user:[{
+  name: 'sundar',
+  rollno: 33,
+  department: 'CSE'
+  }],
 };
 
 export function userDetailsReducer(
   state = initialState,
   action: userDetaialsAction
-): State {
+): UserReduceState {
   switch (action.type) {
     case UserActionTypes.LoadAction:
       return { ...state, user: action.payload };

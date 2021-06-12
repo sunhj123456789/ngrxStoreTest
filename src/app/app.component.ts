@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { TestService } from "./services/test.service";
 import { Store } from "@ngrx/store";
-import { State } from "./store/reducers/userReducers";
 import { userLoad } from "./store/actions/userActions";
+import { AppState, selectAuthState, selectAuthStatusState } from "./store/selector/selector";
 
 @Component({
   selector: "app-root",
@@ -11,12 +11,11 @@ import { userLoad } from "./store/actions/userActions";
 })
 export class AppComponent implements OnInit {
   title = "testngRx";
-  constructor(private userService: TestService, private store: Store<State>) {}
+  constructor(private userService: TestService, private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.userService.getUsers().subscribe((userDetails) => {
-      console.log(userDetails);
-      this.store.dispatch(new userLoad(userDetails));
-    });
-  }
+      this.store.select(selectAuthStatusState).subscribe((item) => {
+        if(item) {console.log(item)};
+    })
+ }
 }
